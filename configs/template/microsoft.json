@@ -1,0 +1,8 @@
+{
+  "start_urls": [
+    "edge.microsoft.com",
+    "msedgeextensions.sf.tlu.dl.delivery.mp.microsoft.com"
+  ],
+  "ping_log": false,
+  "goroutine_count": 2
+}

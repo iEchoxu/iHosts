@@ -1,0 +1,7 @@
+dist
+.idea/
+.goreleaser.yaml
+main-windows.go
+main.exe
+main
+

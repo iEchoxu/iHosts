@@ -1,0 +1,14 @@
+{
+  "start_urls": [
+    "github.com",
+    "github.com",
+    "www.github.com",
+    "www.github.com",
+    "github.global.ssl.fastly.net",
+    "github.global.ssl.fastly.net",
+    "docs.github.com",
+    "docs.github.com"
+  ],
+  "ping_log": false,
+  "goroutine_count": 4
+}
