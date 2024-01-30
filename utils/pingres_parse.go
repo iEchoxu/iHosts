@@ -172,6 +172,7 @@ func (d *DomainPingInfo) GetMinimumPacketLossOfIPList() (MinimumPacketLossList [
 			}
 		}
 	}
+
 	return
 }
 
