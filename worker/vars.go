@@ -13,6 +13,7 @@ type Result struct {
 var (
 	hostChanList = make(chan *global.Hosts, global.EnvConfig.GoroutineCount)
 	chanCount    = 0
+	controlChan  = make(chan struct{})
 )
 
 func (r *Result) GetDomain() string {

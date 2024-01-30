@@ -41,6 +41,8 @@ func Parse(result chan *Result) {
 		}
 	}
 
+	controlChan <- struct{}{} // 用于控制刷新 DNS 缓存的协程在 Parse 协程后执行
+
 	wg.Wait()
 }
 
