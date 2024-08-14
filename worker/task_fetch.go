@@ -1,11 +1,13 @@
 package worker
 
 import (
+	"github.com/antchfx/htmlquery"
 	"ihosts/global"
 	"ihosts/utils"
 	"io"
 	"log"
 	"regexp"
+	"strings"
 	"sync"
 	"time"
 )
@@ -45,16 +47,18 @@ func genUrls() []string {
 
 func response(url string) *Result {
 	HTMLContent := request(url)
-	re := regexp.MustCompile(`href="https://www.ipaddress.com/ipv4/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}">`)
-	matchContent := re.FindAllString(HTMLContent, -1)
-	var ipaddr []string
-	for _, content := range matchContent {
-		getIp := content[37 : len(content)-2]
-		ipaddr = append(ipaddr, getIp)
+
+	IPContent, err := htmlquery.Parse(strings.NewReader(HTMLContent))
+	if err != nil {
+		log.Println("htmlQuery 解析 HTML 内容出错:", err)
 	}
+	IPNode := htmlquery.FindOne(IPContent, `//*[@id="main-wrapper"]//*[@class='summary']/p/text()`)
+
+	re := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
+	IPS := re.FindAllString(IPNode.Data, -1)
 
 	results := new(Result)
-	results.IP = ipaddr
+	results.IP = IPS
 	results.Domain = url
 
 	return results
