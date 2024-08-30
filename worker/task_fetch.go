@@ -47,13 +47,34 @@ func genUrls() []string {
 
 func response(url string) *Result {
 	HTMLContent := request(url)
-
 	IPContent, err := htmlquery.Parse(strings.NewReader(HTMLContent))
 	if err != nil {
 		log.Println("htmlQuery 解析 HTML 内容出错:", err)
 	}
-	IPNode := htmlquery.FindOne(IPContent, `//*[@id="main-wrapper"]//*[@class='summary']/p/text()`)
 
+	IPNode := htmlquery.Find(IPContent, `//*[@id="tabpanel-dns-a"]/pre/text()`)
+	re := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
+	var IPList []string
+	for i := range IPNode {
+		ip := re.FindString(IPNode[i].Data)
+		IPList = append(IPList, ip)
+	}
+
+	results := new(Result)
+	results.IP = IPList
+	results.Domain = url
+
+	return results
+}
+
+func responseBack(url string) *Result {
+	HTMLContent := request(url)
+	IPContent, err := htmlquery.Parse(strings.NewReader(HTMLContent))
+	if err != nil {
+		log.Println("htmlQuery 解析 HTML 内容出错:", err)
+	}
+
+	IPNode := htmlquery.FindOne(IPContent, `//*[@id="main-wrapper"]//*[@class='summary']/p/text()`)
 	re := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
 	IPS := re.FindAllString(IPNode.Data, -1)
 
