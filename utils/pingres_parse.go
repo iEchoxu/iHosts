@@ -24,8 +24,7 @@ type DomainPingInfo struct {
 
 // GetDomain 去除 ipaddress.com 前缀获取真实域名
 func (d *DomainPingInfo) GetDomain() string {
-	//return strings.Split(d.domain, "/")[3]
-	return strings.Replace(d.Domain, "https://sites.ipaddress.com/", "", -1)
+	return strings.Replace(d.Domain, global.IPAddressDomain, "", -1)
 }
 
 // GetPingInfo 获取 ping 结果

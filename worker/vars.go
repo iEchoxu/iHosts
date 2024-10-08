@@ -17,8 +17,7 @@ var (
 )
 
 func (r *Result) GetDomain() string {
-	//return strings.Split(d.domain, "/")[3]
-	return strings.Replace(r.Domain, "https://sites.ipaddress.com/", "", -1)
+	return strings.Replace(r.Domain, global.IPAddressDomain, "", -1)
 }
 
 func (r *Result) GetIP() (ip string) {
