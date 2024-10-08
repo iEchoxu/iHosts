@@ -3,7 +3,6 @@ package utils
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"ihosts/global"
 	"io"
@@ -88,7 +87,6 @@ func (b *BaseType) HostsWrite(hostsChanList chan *global.Hosts) (int64, error) {
 	_, err = tmpContent.WriteString("# Domain-IP 信息已于  " + string(today) + "  完成更新 \n")
 
 	for hostsInfo := range hostsChanList {
-		fmt.Printf("IP: %s,Domain: %s\n", hostsInfo.IP, hostsInfo.Domain)
 		_, err = tmpContent.WriteString(hostsInfo.IP + "\t" + hostsInfo.Domain + "\n")
 	}
 
