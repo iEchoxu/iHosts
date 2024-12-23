@@ -52,7 +52,7 @@ func response(url string) *Result {
 		log.Println("htmlQuery 解析 HTML 内容出错:", err)
 	}
 
-	IPNode := htmlquery.Find(IPContent, `//*[@id="tabpanel-dns-a"]/pre/a/text()`)
+	IPNode := htmlquery.Find(IPContent, `//*[@id="dns"]/div[1]/dl/dd/a/text()`)
 	re := regexp.MustCompile(`(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}`)
 	var IPList []string
 	for i := range IPNode {
